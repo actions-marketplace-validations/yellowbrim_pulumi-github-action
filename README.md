@@ -20,11 +20,13 @@ jobs:
           fetch-depth: 1
       - uses: yellowbrim/pulumi-github-action@v0.2.0
         with:
-          args: up --yes
+					value: ${{ env.SOME_VALUE }} # REQUIRED
+					yq-path: ${{ env.LODASH_PATH }} # REQUIRED
+					yml-file: Pulumi.dev.yaml # DEFAULT: Pulumi.dev.yaml
         env:
-          ZZZ: ${{ secrets.YYY }}
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          PULUMI_CI: up
+          # ZZZ: ${{ secrets.YYY }}
+          # PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          # PULUMI_CI: up
 ```
 
 Use in a `.github/workflows` `.yml` file:
