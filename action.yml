@@ -6,6 +6,20 @@ branding:
 runs:
   using: 'node12'
   main: 'index.js'
-inputs: {}
+inputs:
+  value:
+    required: true
+    description: 'The `value` will be assigned to the contents of the matching `yq-path`'
+  yq-path:
+    required: true
+    description: 'The key to update (example: `config.osys:onboarding-image`)'
+  yml-file:
+    default: Pulumi.dev.yaml
+    required: false
+    description: Which Pulumi config file to update
+  yml-file-encoding:
+    default: utf8
+    required: false
+    description: Used in advanced usecases in fs.readFileSync
 outputs: {}
 author: 'Yellow Brim'
