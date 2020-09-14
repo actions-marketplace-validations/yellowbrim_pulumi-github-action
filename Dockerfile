@@ -16,8 +16,7 @@ LABEL "repository"="https://github.com/yellowbrim/pulumi-github-action"
 LABEL "homepage"="https://github.com/yellowbrim/pulumi-github-action"
 
 # Install deps not already included in base container image.
-RUN apt-get update -y &&
-	apt-get install -y jq
+RUN apt-get update -y && apt-get install -y jq
 
 # Copy the entrypoint script.
 COPY ./entrypoint.sh /usr/bin/pulumi-action
