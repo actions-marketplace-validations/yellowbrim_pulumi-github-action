@@ -1,4 +1,4 @@
-name: 'Pulumi-Stack'
+name: 'Pulumi-Action'
 description: 'Pulumi Stack with output support to Github Action Output'
 runs:
   using: 'docker'
