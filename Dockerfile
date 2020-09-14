@@ -12,8 +12,8 @@ LABEL "com.github.actions.color"="yellow"
 
 # pulumi/actions contains documentation, examples. The actual container image is at
 # https://github.com/pulumi/pulumi.
-LABEL "repository"="https://github.com/pulumi/actions"
-LABEL "homepage"="https://pulumi.com/docs/reference/cd-github-actions/"
+LABEL "repository"="https://github.com/yellowbrim/pulumi-github-action"
+LABEL "homepage"="https://github.com/yellowbrim/pulumi-github-action"
 
 # Install deps not already included in base container image.
 RUN apt-get update -y &&
