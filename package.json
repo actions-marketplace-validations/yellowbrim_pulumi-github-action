@@ -1,6 +1,6 @@
 {
   "name": "pulumi-github-action",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "main": "index.js",
   "repository": "https://github.com/yellowbrim/pulumi-github-action.git",
   "author": "H. Charley Bodkin <hcbodkin@gmail.com>",
