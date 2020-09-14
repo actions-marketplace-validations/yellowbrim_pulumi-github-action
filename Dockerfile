@@ -5,7 +5,7 @@ FROM pulumi/pulumi:${PULUMI_VERSION}
 # will always correspond to the most recently released SDK.
 
 # Label things so it lights up in GitHub Actions!
-LABEL "com.github.actions.name"="Pulumi"
+LABEL "com.github.actions.name"="Pulumi-Action"
 LABEL "com.github.actions.description"="Deploy apps and infra to your favorite cloud!"
 LABEL "com.github.actions.icon"="cloud-lightning"
 LABEL "com.github.actions.color"="yellow"
