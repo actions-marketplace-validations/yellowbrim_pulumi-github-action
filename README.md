@@ -2,6 +2,31 @@
 
 ## Usage
 
+Example:
+
+```yaml
+name: Pulumi
+on:
+  push:
+    branches:
+      - main
+jobs:
+  up:
+    name: Update
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - uses: yellowbrim/pulumi-github-action@v0.2.0
+        with:
+          args: up --yes
+        env:
+          ZZZ: ${{ secrets.YYY }}
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_CI: up
+```
+
 Use in a `.github/workflows` `.yml` file:
 
 ```yaml
