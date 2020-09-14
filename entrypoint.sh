@@ -33,14 +33,14 @@ if [ ! -z "$PULUMI_CI" ]; then
         if [ "$PULUMI_CI" = "pr" ]; then
             # Not all PR events warrant running a preview. Many of them pertain to changes in assignments and
             # ownership, but we only want to run the preview if the action is "opened", "edited", or "synchronize".
-            PR_ACTION=$(jq -r ".action" < $GITHUB_EVENT_PATH)
+            PR_ACTION=$(jq -r ".action" <$GITHUB_EVENT_PATH)
             if [ "$PR_ACTION" != "opened" ] && [ "$PR_ACTION" != "edited" ] && [ "$PR_ACTION" != "synchronize" ]; then
                 echo -e "PR event ($PR_ACTION) contains no changes and does not warrant a Pulumi Preview"
                 echo -e "Skipping Pulumi action altogether..."
                 exit 0
             fi
 
-            BRANCH=$(jq -r ".pull_request.base.ref" < $GITHUB_EVENT_PATH)
+            BRANCH=$(jq -r ".pull_request.base.ref" <$GITHUB_EVENT_PATH)
         else
             BRANCH="$GITHUB_REF"
         fi
@@ -76,13 +76,10 @@ if [ ! -z "$PULUMI_CI" ]; then
     fi
 fi
 
-
-
-
 # For Google, we need to authenticate with a service principal for certain authentication operations.
 if [ ! -z "$GOOGLE_CREDENTIALS" ]; then
     export GOOGLE_APPLICATION_CREDENTIALS="$(mktemp).json"
-    echo "$GOOGLE_CREDENTIALS" > $GOOGLE_APPLICATION_CREDENTIALS
+    echo "$GOOGLE_CREDENTIALS" >$GOOGLE_APPLICATION_CREDENTIALS
     gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
 fi
 
@@ -101,7 +98,7 @@ if [ -e package.json ]; then
     else
         # Set npm auth token if one is provided.
         if [ ! -z "$NPM_AUTH_TOKEN" ]; then
-            echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ~/.npmrc
+            echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" >~/.npmrc
         fi
         npm install
     fi
@@ -139,7 +136,7 @@ $(cat $OUTPUT_FILE)
 fi
 
 if [ "$INPUT_MAP_OUTPUT" = "all" ]; then
-  pulumi stack output -j | jq --raw-output 'to_entries | map("::set-output name=" + .key+"::" + (.value | tostring)+"^") | .[]' | xargs -d '^' echo 
+    pulumi stack output -j | jq --raw-output 'to_entries | map("::set-output name=" + .key+"::" + (.value | tostring)+"^") | .[]' | xargs -d '^' echo
 fi
 
 exit $EXIT_CODE
