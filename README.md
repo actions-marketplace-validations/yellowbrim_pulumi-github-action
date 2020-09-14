@@ -5,8 +5,8 @@
 Use in a `.github/workflows` `.yml` file:
 
 ```yaml
-	- name: Pulumi-Action
-		uses: yellowbrim/pulumi-github-action@v0.2.0
+- name: Pulumi-Action
+  uses: yellowbrim/pulumi-github-action@v0.2.0
 ```
 
 ## Credit
