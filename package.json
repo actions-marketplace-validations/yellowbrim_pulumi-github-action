@@ -4,5 +4,9 @@
   "main": "index.js",
   "repository": "https://github.com/yellowbrim/pulumi-github-action.git",
   "author": "H. Charley Bodkin <hcbodkin@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.5",
+    "@actions/github": "^4.0.0"
+  }
 }

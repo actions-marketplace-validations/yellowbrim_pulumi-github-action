@@ -4,5 +4,8 @@ branding:
   color: yellow
   icon: cloud-lightning
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'node12'
+  main: 'index.js'
+inputs: {}
+outputs: {}
+author: 'Yellow Brim'
