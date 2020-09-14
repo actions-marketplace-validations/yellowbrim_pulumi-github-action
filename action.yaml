@@ -1,5 +1,8 @@
 name: 'Pulumi-Action'
-description: 'Pulumi Stack with output support to Github Action Output'
+description: 'Deploy apps and infra to a favorite cloud (forked from `amichel/pulumi-github-action` who forked from `pulumi/action`)'
+branding:
+  color: yellow
+  icon: cloud-lightning
 runs:
   using: 'docker'
   image: 'Dockerfile'
