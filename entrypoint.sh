@@ -48,31 +48,36 @@ if [ ! -z "$PULUMI_CI" ]; then
         BRANCH=$(echo $BRANCH | sed "s/refs\/heads\///g")
     fi
 
-    # Respect the branch mappings file for stack selection. Note that this is *not* required, but if the file
-    # is missing, the caller of this script will need to pass `-s <stack-name>` to specify the stack explicitly.
-    if [ ! -z "$BRANCH" ]; then
-        if [ -e $ROOT/.pulumi/ci.json ]; then
-            PULUMI_STACK_NAME=$(cat $ROOT/.pulumi/ci.json | jq -r ".\"$BRANCH\"")
-        else
-            # If there's no stack mapping file, we are on master, and there's a single stack, use it.
-            PULUMI_STACK_NAME=$(pulumi stack ls | awk 'FNR == 2 {print $1}' | sed 's/\*//g')
-        fi
+    # Yellow Brim Addition: If PULUMI_STACK_NAME is set, then use that in pulumi stack select
+    if [ ! -z $PULUMI_STACK_NAME ]; then
+        pulumi stack select $PULUMI_STACK_NAME
+    else
+        # Respect the branch mappings file for stack selection. Note that this is *not* required, but if the file
+        # is missing, the caller of this script will need to pass `-s <stack-name>` to specify the stack explicitly.
+        if [ ! -z "$BRANCH" ]; then
+            if [ -e $ROOT/.pulumi/ci.json ]; then
+                PULUMI_STACK_NAME=$(cat $ROOT/.pulumi/ci.json | jq -r ".\"$BRANCH\"")
+            else
+                # If there's no stack mapping file, we are on master, and there's a single stack, use it.
+                PULUMI_STACK_NAME=$(pulumi stack ls | awk 'FNR == 2 {print $1}' | sed 's/\*//g')
+            fi
 
-        if [ ! -z "$PULUMI_STACK_NAME" ] && [ "$PULUMI_STACK_NAME" != "null" ]; then
-            pulumi stack select $PULUMI_STACK_NAME
-        else
-            echo -e "No stack configured for branch '$BRANCH'"
-            echo -e ""
-            echo -e "To configure this branch, please"
-            echo -e "\t1) Run 'pulumi stack init <stack-name>'"
-            echo -e "\t2) Associated the stack with the branch by adding"
-            echo -e "\t\t{"
-            echo -e "\t\t\t\"$BRANCH\": \"<stack-name>\""
-            echo -e "\t\t}"
-            echo -e "\tto your .pulumi/ci.json file"
-            echo -e ""
-            echo -e "For now, exiting cleanly without doing anything..."
-            exit 0
+            if [ ! -z "$PULUMI_STACK_NAME" ] && [ "$PULUMI_STACK_NAME" != "null" ]; then
+                pulumi stack select $PULUMI_STACK_NAME
+            else
+                echo -e "No stack configured for branch '$BRANCH'"
+                echo -e ""
+                echo -e "To configure this branch, please"
+                echo -e "\t1) Run 'pulumi stack init <stack-name>'"
+                echo -e "\t2) Associated the stack with the branch by adding"
+                echo -e "\t\t{"
+                echo -e "\t\t\t\"$BRANCH\": \"<stack-name>\""
+                echo -e "\t\t}"
+                echo -e "\tto your .pulumi/ci.json file"
+                echo -e ""
+                echo -e "For now, exiting cleanly without doing anything..."
+                exit 0
+            fi
         fi
     fi
 fi
